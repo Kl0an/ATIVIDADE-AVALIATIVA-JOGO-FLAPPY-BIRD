@@ -26,7 +26,7 @@ document.addEventListener('keydown', (e) => {
         bird.style.top = '40vh';
         game_state = 'Play';
         message.innerHTML = '';
-        score_title.innerHTML = 'Score : ';
+        score_title.innerHTML = 'Pontuação : ';
         score_val.innerHTML = '0';
         message.classList.remove('messageStyle');
         background_music.loop = true; // Define a música para tocar em loop
@@ -35,7 +35,22 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Função para pausar e retomar a música
+function toggleMusic() {
+    if (background_music.paused) {
+        background_music.play();
+        document.getElementById('pause-button').innerText = 'Pausar Música';
+    } else {
+        background_music.pause();
+        document.getElementById('pause-button').innerText = 'Retomar Música';
+    }
+}
+
+// Adiciona o evento de clique ao botão
+document.getElementById('pause-button').addEventListener('click', toggleMusic);
+
 function play() {
+    let birdAnimationFrame = 0; // Contador para animação do pássaro
     function move() {
         if (game_state != 'Play') return;
 
@@ -81,14 +96,7 @@ function play() {
 
         document.addEventListener('keydown', (e) => {
             if (e.key == 'ArrowUp' || e.key == ' ') {
-                img.src = 'Bird-2.png'; // Muda para a imagem do pássaro em movimento
                 bird_dy = -7.6; // Aplica a gravidade negativa para fazer o pássaro subir
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (e.key == 'ArrowUp' || e.key == ' ') {
-                img.src = 'Bird.png'; // Retorna para a imagem do pássaro normal
             }
         });
 
@@ -99,6 +107,14 @@ function play() {
             message.classList.remove('messageStyle');
             return;
         }
+
+        // Alterna a imagem do pássaro para animação
+        if (bird_dy < 0) {
+            img.src = 'Bird-2.png'; // Imagem do pássaro subindo
+        } else {
+            img.src = 'Bird.png'; // Imagem do pássaro descendo
+        }
+
         bird.style.top = bird_props.top + bird_dy + 'px';
         bird_props = bird.getBoundingClientRect();
         requestAnimationFrame(apply_gravity);
