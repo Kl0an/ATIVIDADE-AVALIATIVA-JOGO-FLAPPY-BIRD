@@ -26,7 +26,7 @@ document.addEventListener('keydown', (e) => {
         bird.style.top = '40vh';
         game_state = 'Play';
         message.innerHTML = '';
-        score_title.innerHTML = 'Pontuação : ';
+        score_title.innerHTML = 'Pontuação : '; // Alterado para "Pontuação"
         score_val.innerHTML = '0';
         message.classList.remove('messageStyle');
         background_music.loop = true; // Define a música para tocar em loop
@@ -34,20 +34,6 @@ document.addEventListener('keydown', (e) => {
         play();
     }
 });
-
-// Função para pausar e retomar a música
-function toggleMusic() {
-    if (background_music.paused) {
-        background_music.play();
-        document.getElementById('pause-button').innerText = 'Pausar Música';
-    } else {
-        background_music.pause();
-        document.getElementById('pause-button').innerText = 'Retomar Música';
-    }
-}
-
-// Adiciona o evento de clique ao botão
-document.getElementById('pause-button').addEventListener('click', toggleMusic);
 
 function play() {
     let birdAnimationFrame = 0; // Contador para animação do pássaro
